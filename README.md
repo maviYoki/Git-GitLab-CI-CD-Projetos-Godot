@@ -105,6 +105,12 @@ Recomendo seguir os padrões de **Conventional Commits**, que vai facilitar o en
 | `ci:` | `ci: adiciona verificação automática dos arquivos` |
 | `chore:` | `chore: atualiza arquivos de configuração` |
 | `revert:` | `revert: remove sistema de diálogo` |
+| `refactor:` | `refactor: extrai lógica de vida do jogador para um script próprio` |
+
+---
+
+Existe uma regra que utiliza `!` para mudanças que quebram compatibilidade:
+`feat!: muda o formato do save`.
 
 ### Um pouco mais sobre branches
 
@@ -444,6 +450,12 @@ Digite seu nome de usuário do GitLab e na senha, você coloca o Token gerado no
    - **Visibility Level**: **Private** (só quem for convidado acessa), **Internal** ou **Public**.
    - **Project description** (opcional): uma descrição curta do projeto.
 4. Clique em Create project.
+
+**Dica para evitar um problema comum de `refusing to merge unrelated histories` :** crie o projeto no GitLab **vazio**, sem README, mas caso tenha dado esse erro, rode:
+
+```bash
+git pull origin main --allow-unrelated-histories
+```
 
 ### Como adicionar Grupo
 
