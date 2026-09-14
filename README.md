@@ -370,7 +370,7 @@ Welcome to GitLab, @nome-usuario!
 
 Com uma chave SSH configurada, o GitLab consegue reconhecer seu computador por meio da sua chave.
 
-#### Caso não saiba sua passphrase SSH
+##### Caso não saiba sua passphrase SSH
 
 Crie outra chave ([Como gerar uma chave SSH](#2-como-gerar-uma-chave-ssh)), mas com um passo diferente, quando perguntar aonde você quer salvar, você deve dar um nome diferente, para não sobrescrever a chave antiga, por exemplo:
 
@@ -385,6 +385,54 @@ Eai você pode salvar seu arquivo assim:
 ```
 
 Após isso, continue com os passos normalmente, mas se atente que agora a chave que será utilizada não será mais a padrão `ssh/id_ed25519.pub` e sim `ssh/id_ed25519_gitlab.pub`.
+
+#### HTTPS
+
+Outra opção para o **Git** se conectar, é usar uma URL **HTTPS** + **PAT** :
+
+```bash
+https://gitlab.com/usuario/projeto.git
+```
+
+##### Como utilizar o metódo HTTPS
+
+Você precisará do **HTTPS** + **PAT** (Personal Access Token), que será utilizado como meio de autenticação.
+
+Esse **PAT** é um código gerado pelo próprio GitLab
+
+##### Como criar o PAT
+
+**avatar → Edit profile → Access** → **Personal access tokens**
+
+Depois escolha **Generate token** → **Legacy token**
+
+Você verá campos como:
+
+**Token name** → dê um nome para identificar o token.
+**Expiration date** → data em que ele deixará de funcionar.
+**Scopes** → quais permissões o token terá.
+
+Para usar Git por HTTPS, o token precisa ter permissão para as operações que você pretende realizar.
+
+Se você quer fazer:
+
+```bash
+git clone
+git pull
+git push
+```
+
+precisa de permissão de leitura e escrita.
+
+Depois disso é só clicar em **Generate token**
+
+**_Nota: Guarde esse token em um lugar seguro, pois não será possível acessa-lo novamente_**
+
+##### Como testar o PAT
+
+Vá no terminal do seu projeto e tente fazer um `git pull`.
+
+Digite seu nome de usuário do GitLab e na senha, você coloca o Token gerado no passo anterior, e pronto
 
 ## Desenvolvimento em Grupo
 
