@@ -456,6 +456,26 @@ Digite seu nome de usuário do GitLab e na senha, você coloca o Token gerado no
    - **Maintainer**: além disso, pode alterar configurações do projeto/grupo e aprovar merges na `main`.
 6. Clique em **Invite**. Ao criar um novo projeto, escolha esse grupo como namespace — assim, todos os membros do grupo automaticamente têm acesso ao projeto.
 
+### Como clonar repositório
+
+1. No projeto no GitLab, clique no botão **Clone**.
+2. Copie a URL em **Clone with HTTPS** ou **Clone with SSH** (se já tiver configurado a chave SSH, prefira essa opção, para evita digitar usuário/senha toda hora).
+3. No terminal do diretório/pasta onde você quer salvar o projeto:
+
+Caso esteja usando autenticação **HTTPS**:
+
+```bash
+git clone https://gitlab.com/usuario-ou-grupo/meu-projeto.git
+```
+
+Se estiver usando **SSH**:
+
+```bash
+git clone git@gitlab.com:usuario-ou-grupo/meu-projeto.git
+```
+
+Isso cria uma pasta com o nome do projeto, já com o remoto `origin` configurado automaticamente (basicamente, não precisa rodar `git remote add origin` de novo).
+
 ## Desenvolvimento em Grupo
 
 ### Resolvendo conflitos de merge
