@@ -285,9 +285,9 @@ id_ed25519 ← chave privada
 id_ed25519.pub ← chave pública
 ```
 
-##### 2. Gere uma chave, caso ainda não tenha uma
+##### 2. Como gerar uma chave SSH
 
-Execute:
+Caso não tenha uma chave, execute:
 
 ```bash
 ssh-keygen -t ed25519 -C "seu-email@example.com"
@@ -301,7 +301,7 @@ O terminal perguntará onde deseja salvar a chave:
 Enter file in which to save the key (/home/seuusuario/.ssh/id_ed25519):
 ```
 
-Se quiser utilizar o local padrão, e pressione Enter. Depois será solicitada uma passphrase. Ela funciona como uma senha para proteger sua chave privada.
+Se quiser utilizar o local padrão, pressione Enter. Depois será solicitada uma passphrase. Ela funciona como uma senha para proteger sua chave privada.
 
 Você pode digitar uma senha e pressionar Enter (ou deixar vazio e apenas pressionar Enter).
 
@@ -369,6 +369,22 @@ Welcome to GitLab, @nome-usuario!
 ```
 
 Com uma chave SSH configurada, o GitLab consegue reconhecer seu computador por meio da sua chave.
+
+#### Caso não saiba sua passphrase SSH
+
+Crie outra chave ([Como gerar uma chave SSH](#2-como-gerar-uma-chave-ssh)), mas com um passo diferente, quando perguntar aonde você quer salvar, você deve dar um nome diferente, para não sobrescrever a chave antiga, por exemplo:
+
+```bash
+/home/seuusuario/.ssh/id_ed25519_gitlab
+```
+
+Eai você pode salvar seu arquivo assim:
+
+```bash
+~/.ssh/id_ed25519_gitlab.pub
+```
+
+Após isso, continue com os passos normalmente, mas se atente que agora a chave que será utilizada não será mais a padrão `ssh/id_ed25519.pub` e sim `ssh/id_ed25519_gitlab.pub`.
 
 ## Desenvolvimento em Grupo
 
