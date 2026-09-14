@@ -434,6 +434,28 @@ Vá no terminal do seu projeto e tente fazer um `git pull`.
 
 Digite seu nome de usuário do GitLab e na senha, você coloca o Token gerado no passo anterior, e pronto
 
+### Como criar um projeto
+
+1. No canto superior, clique em Create new (ícone de +) e depois em New project/repository.
+2. Selecione Create blank project.
+3. Preencha os detalhes do projeto:
+   - **Project name**: nome do projeto (ex.: jogo-educativo-tcc).
+   - **Project slug**: caminho usado na URL do projeto (preenchido automaticamente a partir do nome, mas pode ser editado).
+   - **Visibility Level**: **Private** (só quem for convidado acessa), **Internal** ou **Public**.
+   - **Project description** (opcional): uma descrição curta do projeto.
+4. Clique em Create project.
+
+### Como adicionar Grupo
+
+1. Na barra lateral esquerda, clique em **Create new** → **New group**.
+2. Defina o **Group name** e o **Visibility level**.
+3. Depois de criado, entre no grupo e vá em **Manage** → **Members**.
+4. Clique em **Invite members**. Se o outro membro já tiver conta no GitLab, digite o nome de usuário dele, se não tiver, digite o e-mail.
+5. Escolha o papel (Role) de cada um:
+   - **Developer**: pode enviar código, criar branches e **Merge Requests** (papel recomendado para os integrantes do projeto).
+   - **Maintainer**: além disso, pode alterar configurações do projeto/grupo e aprovar merges na `main`.
+6. Clique em **Invite**. Ao criar um novo projeto, escolha esse grupo como namespace — assim, todos os membros do grupo automaticamente têm acesso ao projeto.
+
 ## Desenvolvimento em Grupo
 
 ### Resolvendo conflitos de merge
