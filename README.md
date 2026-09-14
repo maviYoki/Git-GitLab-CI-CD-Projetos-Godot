@@ -476,6 +476,46 @@ git clone git@gitlab.com:usuario-ou-grupo/meu-projeto.git
 
 Isso cria uma pasta com o nome do projeto, já com o remoto `origin` configurado automaticamente (basicamente, não precisa rodar `git remote add origin` de novo).
 
+### Merge Request
+
+Depois de terminar uma alteração em uma branch, você pode criar um **Merge Request (MR)** para propor que essas alterações sejam incorporadas a outra branch.
+
+```bash
+git push -u origin feature/combate
+```
+
+Depois do `push`, o **GitLab** pode mostrar uma opção para **Create merge request**. Também é possível criar um **Merge Request** pela página **Code** → **Merge requests** → **merge request**.
+
+Por exemplo:
+
+```
+Source branch: feature/combate
+Target branch: main
+```
+
+#### Preenchendo o Merge Request
+
+Na página de criação do **Merge Request**:
+
+1. Confira a **Source** branch (que contém as alterações.) e a **Target** branch (receberá essas alterações).
+2. Preencha o **Title** com um título que identifique claramente o objetivo do **Merge Request**: "Adição da lógica de dano do personagem X".
+3. Preencha a Description explicando o que foi alterado ou fornecendo informações importantes para quem fará a revisão (coloque como testar essa funcionalidade).
+4. **Reviewer**: se o projeto tiver revisão de código, adicione a pessoa que responsável.
+5. **Assignee**: indique a pessoa responsável pelo andamento do Merge Request, caso tenha alguém que irá monitorar como está indo.
+6. Depois de preencher os campos necessários, selecione **Create merge request**.
+
+#### Apagando a branch depois do merge
+
+Depois que um **Merge Request** é mesclado, a branch de origem pode ser excluída caso não seja mais necessária.
+
+Na criação do **Merge Request**, o GitLab oferece a opção **Delete source branch when merge request is accepted**, se selecionada, a branch de origem será excluída automaticamente após o merge.
+
+Isso exclui a branch no repositório remoto. A cópia local pode ser excluída separadamente:
+
+```bash
+git branch -d feature/combate
+```
+
 ## Desenvolvimento em Grupo
 
 ### Resolvendo conflitos de merge
