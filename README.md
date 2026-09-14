@@ -501,9 +501,12 @@ Depois do `push`, o **GitLab** pode mostrar uma opção para **Create merge requ
 Por exemplo:
 
 ```
-Source branch: feature/combate
+Source branch: development
 Target branch: main
 ```
+
+**_Dica:_** O único MR que tem a `main` como destino é o de `development → main`,
+quando o grupo fecha uma versão.
 
 #### Preenchendo o Merge Request
 
@@ -527,6 +530,8 @@ Isso exclui a branch no repositório remoto. A cópia local pode ser excluída s
 ```bash
 git branch -d feature/combate
 ```
+
+**_Dica:_** `git branch -d` só apaga a branch se ela já tiver sido mesclada. Se não foi, o **Git** recusa. Com D (maiúsculo) força a exclusão. **Não use `-D` sem ter certeza absoluta.**
 
 ## Desenvolvimento em Grupo
 
