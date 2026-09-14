@@ -74,11 +74,13 @@ Caso tenha algum arquivo no seu reposiório remoto, traga essas alterações ant
 git pull origin main
 ```
 
-Só depois envie as alterações do seu repositorio local para o remoto:
+Só depois envie as alterações do seu repositório local para o remoto:
 
 ```bash
 git push origin main
 ```
+
+Resumindo a ordem lógica: `remote add` → `pull` (se já existir algo no remoto) → `push`.
 
 ### Boas práticas de commit
 
@@ -102,9 +104,9 @@ Recomendo seguir os padrões de **Conventional Commits**, que vai facilitar o en
 
 #### O que é uma branch?
 
-A branch é uma linha de desenvolvimento.
+A branch é uma linha de desenvolvimento independente.
 
-Um mesmo projeto pode ter várias branches para organizar e separar diferentes partes do desenvolvimento. A `main`, geralmente é a branch principal, e podem existir branches para cada funcionalidade ou de acordo com a dinâmica de desenvolvimento definida para o projeto.
+Um mesmo projeto pode ter várias branches para organizar e separar diferentes partes do desenvolvimento. A `main`, geralmente é a branch principal, e podem existir branches para cada funcionalidade, de acordo com a dinâmica de desenvolvimento definida para o projeto.
 
 #### Como criar uma branch local (caso não tenha
 
@@ -119,17 +121,15 @@ git switch -c <nome da branch>
 `-c`: criação
 `<nome da branch>`: aqui você define o nome da sua branch
 
+2. Para conferir em qual branch você está e listar as branches locais:
+
 ```bash
 git branch
 ```
 
-Esse último comando confirma a criação da branch.
+#### Boas práticas ao nomear branch
 
-### Boas práticas ao nomear branch
-
-O git não exige uma convenção universal para nomenclatura, isso parte de como a equipe de desenvolvimento prefere trabalhar.
-
-Mas podemos citar alguns exemplos de nomenclatura que podemos utilizar.
+O Git não exige uma convenção universal para nomenclatura, isso parte de como a equipe de desenvolvimento prefere trabalhar. Mas podemos citar alguns exemplos de nomenclatura comuns.
 
 | Tipo       | Exemplo                             |
 | ---------- | ----------------------------------- |
@@ -145,25 +145,29 @@ Mas podemos citar alguns exemplos de nomenclatura que podemos utilizar.
 - `bugfix/dialogo`
 - `release/v1.0`
 
-A `/` faz parte do nome da branch, ela não cria uma pasta nem uma hieraquia, `bugfix/dialogo` é um nome só, e essa branch terá suas alterações que serão referentes ao nome dessa branch.
+A `/` faz parte do nome da branch, ela **não** cria uma pasta nem uma hieraquia. `bugfix/dialogo` é um nome só, e essa branch conterá suas alterações referentes a esse nome.
 
-Mas não é por que ela não possui uma nomenclatura universal que não possui boas práticas que uma convenção deve priorizar:
+Mesmo sem uma convenção universal, uma boa nomenclatura deve priorizar:
 
-- clareza
-- consistência
-- identificação
-- nome curto e prático
+- **clareza**
+- **consistência**
+- **identificação**
+- **nome curto e prático**
 
-   **Sugestão para o nosso projeto**
+---
 
-| Tipo                             | Exemplo                                                                        |
-| -------------------------------- | ------------------------------------------------------------------------------ |
-| `main`                           | principal                                                                      |
-| `development`                    | para testarmos as funcionalidades antes de fazer merge (junção com o main)     |
-| `feature/nome-da-funcionalidade` | para dividirmos funções e evitar mexer todos na mesma coisa e causar conflitos |
+**Sugestão para o nosso projeto**
+
+| Branch                           | Finalidade                                                                  |
+| -------------------------------- | --------------------------------------------------------------------------- |
+| `main`                           | versão estável/principal                                                    |
+| `development`                    | para testar as funcionalidades antes de fazer merge com a `main`            |
+| `feature/nome-da-funcionalidade` | para dividir tarefas e evitar que todos mexam na mesma coisa ao mesmo tempo |
+
+---
 
 #### Branch local e remota
 
-Lembre-se: nao é porque uma branch existe localmente, que ela existe remotamente
+Lembre-se: não é porque uma branch existe localmente, que ela existe remotamente, e vice-versa.
 
-`feature/login` e `origin/feture/login` não são a mesma coisa, a primeira existe localmente e a segunda remotamente, o termo para se referênciar a branch rem
+`feature/login` (local) e `origin/feture/login` (remota) não são a mesma coisa: a primeira existe apenas na sua máquina, e a segunda remotamente (GitLab). O termo para se referir à branch remota é sempre `<nome-do-remoto>/<nome-da-branch>` — no nosso caso, `origin/feature/login`.
