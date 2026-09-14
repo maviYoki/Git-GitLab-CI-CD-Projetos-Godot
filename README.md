@@ -15,7 +15,7 @@ Este guia se baseará em conceitos de Git Flow, mas com adaptações para o noss
    - [Utilizando o Git em grupo](#utilizando-o-git-em-grupo)
 
 - **GitLab**
-   - [Primeira vez utilizando o GitLab](primeira-vez-utilizando-o-gitlab)
+   - [Primeira vez utilizando o GitLab](#primeira-vez-utilizando-o-gitlab)
    - [Como criar um projeto](#como-criar-um-projeto)
    - [Como adicionar Grupo](#como-adicionar-grupo)
    - [Como clonar repositório](#como-clonar-repositório)
