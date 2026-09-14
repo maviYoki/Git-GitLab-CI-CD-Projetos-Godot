@@ -249,6 +249,127 @@ Caso esteja se baseando no nosso guia e nos conceitos de fluxo do GitFlow.
 >
 > — [Documentação oficial do GitLab](https://docs.gitlab.com/)
 
+### Primeira vez utilizando o GitLab
+
+Após criar sua conta, um passo interessante é configurar sua chave **SSH**, mas antes vamos falar para que serve.
+
+#### Por que configurar SSH no GitLab?
+
+Quando o Git precisa conversar com o GitLab, ele precisa se autenticar, ou seja, provar que você tem permissão para acessar aquele repositório.
+
+O GitLab oferece diferentes formas de autenticação, como:
+
+- **SSH**: usa um par de chaves SSH para autenticar o computador.
+- **HTTPS + Personal Access Token (PAT)**: usa uma URL HTTPS e um token como credencial.
+
+_Nota_: Como citado, isso é apenas para o desenvolvedor se identificar e autenticar para poder ter acesso ao projeto, então use o que for mais confortável.
+
+#### SSH
+
+Cria um par de chaves, uma **pública** (essa será utilizada na sua conta do **GitLab**) e uma **privada** (essa fica apenas na sua máquina e não deve ser compartilhada).
+
+A principal vantagem é que, depois de configurar a chave, você não precisa fornecer seu usuário e senha do **GitLab** a cada `push` ou `pull`.
+
+#### Configurando o SSH
+
+##### 1. Verifique se você já possui as chaves:
+
+```bash
+ls -la ~/.ssh
+```
+
+Procure por arquivos como:
+
+```bash
+id_ed25519 ← chave privada
+id_ed25519.pub ← chave pública
+```
+
+##### 2. Gere uma chave, caso ainda não tenha uma
+
+Execute:
+
+```bash
+ssh-keygen -t ed25519 -C "seu-email@example.com"
+```
+
+O GitLab recomenda o tipo ED25519 para novas chaves.
+
+O terminal perguntará onde deseja salvar a chave:
+
+```bash
+Enter file in which to save the key (/home/seuusuario/.ssh/id_ed25519):
+```
+
+Se quiser utilizar o local padrão, e pressione Enter. Depois será solicitada uma passphrase. Ela funciona como uma senha para proteger sua chave privada.
+
+Você pode digitar uma senha e pressionar Enter (ou deixar vazio e apenas pressionar Enter).
+
+Depois digite a mesma senha novamente quando for solicitado (caso tenha colocado uma senha). Ao terminar, serão criados dois arquivos:
+
+```bash
+~/.ssh/id_ed25519
+~/.ssh/id_ed25519.pub
+```
+
+##### 3. Adicione a chave pública ao GitLab
+
+Agora coloque somente a chave pública na sua conta do GitLab. Para visualizar a chave:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Será mostrada uma linha parecida com:
+
+```bash
+ssh-ed25519 AAAAC3... seu-email@example.com
+```
+
+Copie a linha inteira.
+
+##### 4. No GitLab:
+
+4.1. Clique na sua foto de perfil.
+
+4.2. Entre em Edit profile.
+
+4.3. No menu lateral, acesse Access → SSH keys.
+
+4.4 Clique em Add new key.
+
+4.5. Cole a chave no campo Key.
+
+4.6. Dê um nome para identificar o computador, por exemplo: `Meu computador`.
+
+4.7. Adicione a chave.
+
+Ao fim desse processo se tudo deu certo, o GitLab irá associar sua conta à sua chave pública.
+
+##### 5. Vamos testar a conexão
+
+No seu terminal, rode:
+
+```bash
+ssh -T git@gitlab.com
+```
+
+`ssh` → programa SSH do seu computador
+
+`-T` → pede um teste de autenticação, sem abrir um terminal no servidor
+
+`git@gitlab.com` → usuário "git" no servidor GitLab
+
+Após rodar, ele perguntará se você deseja confiar nesse servidor, aí é só digitar: `y` (yes).
+
+Depois de confirmar a conexão, deverá retornar uma mensagem de boas-vindas do GitLab:
+
+```bash
+Welcome to GitLab, @nome-usuario!
+```
+
+Com uma chave SSH configurada, o GitLab consegue reconhecer seu computador por meio da sua chave.
+
 ## Desenvolvimento em Grupo
 
 ### Resolvendo conflitos de merge
