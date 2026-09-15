@@ -29,6 +29,7 @@ Este guia se baseará em conceitos de Git Flow, mas com adaptações para o noss
    - [Merge Request](#merge-request)
 
 - **Godot**
+   - [Como clonar um repositório no Godot](#como-clonar-um-repositório-no-godot)
    - [Deixe o Godot criar o `.gitignore` para você](#deixe-o-godot-criar-o-gitignore-para-você)
    - [Um pouco mais sobre o `.gitignore` no Godot](#um-pouco-mais-sobre-o-gitignore-no-godot)
    - [Git LFS plugin](#git-lfs-plugin)
@@ -553,6 +554,14 @@ git branch -d feature/combate
 > Godot busca ser amigável a sistemas de controle de versão e gerar arquivos majoritariamente legíveis e mescláveis.
 >
 > — [Documentação oficial do Godot](https://docs.godotengine.org/en/stable/tutorials/best_practices/version_control_systems.html)
+
+### Como clonar um repositório no Godot
+
+1. Clone o seu repositório do GitLab em algum lugar da sua máquina
+2. Abra o Godot Engine. 
+3. Na janela de seleção de projetos, clique em **Import**. 
+4. Navegue até a pasta onde o repositório foi clonado.
+5. Selecione o arquivo `project.godot` e clique em **Open**. 
 
 ### Deixe o Godot criar o `.gitignore` para você
 
