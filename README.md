@@ -11,7 +11,7 @@ Este guia se baseará em conceitos de Git Flow, mas com adaptações para o noss
    - [Criando seu primeiro repositório](#criando-seu-primeiro-repositório)
    - [Como vincular repositório local com o remoto](#como-vincular-repositório-local-com-o-remoto)
    - [Boas práticas de commit](#boas-práticas-de-commit)
-   - [Um pouco mais sobre branch](#um-pouco-mais-sobre-branch)
+   - [Um pouco mais sobre branches](#um-pouco-mais-sobre-branches)
    - [Utilizando o Git em grupo](#utilizando-o-git-em-grupo)
 
 - **GitLab**
@@ -533,9 +533,105 @@ git branch -d feature/combate
 
 **_Dica:_** `git branch -d` só apaga a branch se ela já tiver sido mesclada. Se não foi, o **Git** recusa. Com D (maiúsculo) força a exclusão. **Não use `-D` sem ter certeza absoluta.**
 
+## Godot
+
+> Godot busca ser amigável a sistemas de controle de versão e gerar arquivos majoritariamente legíveis e mescláveis.
+>
+> — [Documentação oficial do Godot](https://docs.godotengine.org/en/stable/tutorials/best_practices/version_control_systems.html)
+
+### Deixe o Godot criar o `.gitignore` para você
+
+Não utilize um `.gitignore` aleatorio da internet, pois aqui o Godot ajuda de mais.
+
+**Em um projeto novo**: no Gerenciador de Projetos, na janela **New Project** → **Git** em _Version Control Metadata_. O Godot cria os arquivos `.gitignore` e `.gitattributes` na raiz do projeto.
+
+**Em um projeto que já existe**: no editor, acesse o menu **Project** → **Version Control** → **Generate Version Control Metadata**. O resultado é o mesmo.
+
+### Um pouco mais sobre o `.gitignore` no Godot
+
+O Godot acaba criando alguns arquivos sozinhos:
+
+| Item            | O que é                                                              |
+| --------------- | -------------------------------------------------------------------- |
+| `.godot/`       | pasta que guarda dados de cache do projeto                           |
+| `*.translation` | traduções binárias, geradas automaticamente a partir de arquivos CSV |
+
+---
+
+### Git LFS: para as imagens, sons e fontes, plugin
+
+Essa extensão é utilizada para lidar com arquivos grande. Basicamente mantém no repositório um arquivo pequeno chamado ponteiro (pointer), que indica qual arquivo grande deve ser obtido. O conteúdo do arquivo grande é armazenado no servidor de armazenamento do **Git LFS**, separado dos objetos Git normais.
+
+#### Configure o LFS ANTES de commitar os assets
+
+o **LFS** precisa estar configurado antes de você commitar os arquivos. Se eles já estiverem no repositório, será preciso removê-los e readicioná-los depois de configurar o LFS.
+
+Para configurar:
+
+```bash
+git lfs install
+git lfs track "*.png"
+git lfs track "*.ogg"
+```
+
+Cada `git lfs track` escreve uma linha no `.gitattributes`. Commite esse arquivo junto com o resto.
+
+Um detalhe importante: **quem clonar o repositório precisa ter o Git LFS instalado** na máquina para conseguir baixar os arquivos reais.
+
 ## Desenvolvimento em Grupo
 
-### Resolvendo conflitos de merge
+### Fluxo do grupo
+
+#### Setup: você faz isso uma única vez
+
+- Instalar o [Git](https://git-scm.com/downloads)
+- Instalar o [Git LFS](https://git-lfs.com/) (**obrigatório**, senão as imagens e sons não baixam)
+- Instalar o Godot na versão combinada pelo grupo
+- Configurar sua identidade, usando o mesmo e-mail da sua conta do GitLab:
+- Criar conta no GitLab e aceitar o convite do grupo
+- Configurar a [chave SSH](#configurando-o-ssh) (ou o [PAT via HTTPS](#como-criar-o-pat))
+- Clonar o projeto
+
+#### A rotina de todo dia
+
+**1. Antes de começar**, atualize a branch estável e crie a sua branch de tarefa:
+
+```bash
+git switch development
+git pull origin development
+git switch -c feature/nome-da-sua-tarefa
+```
+
+**2. Enquanto trabalha**, repita quantas vezes forem necessárias:
+
+```bash
+git status
+git add .
+git commit -m "feat: descreve o que você fez"
+```
+
+**3. Quando terminar a tarefa**, publique a branch:
+
+```bash
+git push -u origin feature/nome-da-sua-tarefa
+```
+
+O `-u` é apenas no **primeiro** push desta branch. Depois disso, `git push` sozinho já basta.
+
+**4. Abra o [Merge Request](#merge-request) no GitLab:**
+
+### Algumas regras do grupo
+
+1. **Nunca commite direto na `main` ou na `development`.** Sempre branch + Merge Request.
+2. **Uma tarefa = uma branch = um Merge Request.**
+3. **Avise no grupo antes de mexer numa cena.** "Peguei a `fase_01.tscn`". Duas pessoas na mesma cena ao mesmo tempo aumenta chances de conflitos.
+4. **Dê `git pull origin development` antes de começar o dia.**
+5. **Commite sempre e com frequência.** lembre-se, quanto mais demorar pra commitar, mas confuso será para entender o que você mudou e aumenta chances de conflito.
+6. **Se der erro, converse com a equipe.** Pois tentar solucionar sozinho, pode resultar em partes apagadas sem a intenção, entre outros problemas maiores.
+
+### Ajuda com erros e alguns problemas comuns
+
+#### Resolvendo conflitos de merge
 
 1. Veja quais arquivos estão em conflito:
 
@@ -565,3 +661,16 @@ git commit -m "fix: resolve conflito de merge em nome-do-arquivo"
 ```
 
 A maioria das IDEs (VS Code, por exemplo) e o próprio GitLab (na tela do Merge Request) oferecem uma interface visual para resolver conflitos, o que costuma ser mais fácil do que editar o arquivo manualmente.
+
+#### Tabela de socorro rápida
+
+| O que apareceu na tela                            | O que aconteceu                              | O que fazer                                                                  |
+| ------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------- |
+| `fatal: not a git repository`                     | Você não está na pasta do projeto            | Use `cd` até a pasta certa                                                   |
+| `Updates were rejected`                           | Alguém enviou algo antes de você             | `git pull origin <sua-branch>`, resolva se houver conflito, e envie de novo  |
+| `refusing to merge unrelated histories`           | Os dois repositórios nasceram separados      | `git pull origin main --allow-unrelated-histories`                           |
+| `CONFLICT (content): ...`                         | Duas pessoas mexeram na mesma linha          | Siga a seção [Resolvendo conflitos de merge](#resolvendo-conflitos-de-merge) |
+| Conflito em um arquivo `.tscn`                    | Duas pessoas mexeram na mesma cena           | **Pare.** Chame a outra pessoa. Não resolva na mão                           |
+| `Permission denied (publickey)`                   | Sua chave SSH não está configurada no GitLab | Refaça a seção [Configurando o SSH](#configurando-o-ssh)                     |
+| Muitos arquivos "modificados" sem você ter mexido | Fim de linha (CRLF/LF) no Windows            | Veja [Windows e o fim de linha](#windows-e-o-fim-de-linha)                   |
+| Imagens e sons vieram como texto estranho         | O Git LFS não está instalado                 | Instale o Git LFS e rode `git lfs pull`                                      |
