@@ -19,9 +19,17 @@ Este guia se baseará em conceitos de Git Flow, mas com adaptações para o noss
    - [Como criar um projeto](#como-criar-um-projeto)
    - [Como adicionar Grupo](#como-adicionar-grupo)
    - [Como clonar repositório](#como-clonar-repositório)
+   - [Merge Request](#merge-request)
+
+- **Godot**
+   - [Deixe o Godot criar o `.gitignore` para você](#deixe-o-godot-criar-o-gitignore-para-você)
+   - [Um pouco mais sobre o `.gitignore` no Godot](#um-pouco-mais-sobre-o-gitignore-no-godot)
+   - [Git LFS plugin](#git-lfs-plugin)
 
 - **Desenvolvimento em Grupo**
-   - [Resolvendo conflitos de merge](#resolvendo-conflitos-de-merge)
+   - [Fluxo do grupo](#fluxo-do-grupo)
+   - [Algumas regras do grupo](#algumas-regras-do-grupo)
+   - [Ajuda com erros e alguns problemas comuns](#ajuda-com-erros-e-alguns-problemas-comuns)
 
 ## Git
 
@@ -558,7 +566,7 @@ O Godot acaba criando alguns arquivos sozinhos:
 
 ---
 
-### Git LFS: para as imagens, sons e fontes, plugin
+### Git LFS plugin
 
 Essa extensão é utilizada para lidar com arquivos grande. Basicamente mantém no repositório um arquivo pequeno chamado ponteiro (pointer), que indica qual arquivo grande deve ser obtido. O conteúdo do arquivo grande é armazenado no servidor de armazenamento do **Git LFS**, separado dos objetos Git normais.
 
@@ -592,6 +600,8 @@ Um detalhe importante: **quem clonar o repositório precisa ter o Git LFS instal
 - Configurar a [chave SSH](#configurando-o-ssh) (ou o [PAT via HTTPS](#como-criar-o-pat))
 - Clonar o projeto
 
+> **Para evitar erros, revisite as seções referentes a cada etapa**
+
 #### A rotina de todo dia
 
 **1. Antes de começar**, atualize a branch estável e crie a sua branch de tarefa:
@@ -619,6 +629,17 @@ git push -u origin feature/nome-da-sua-tarefa
 O `-u` é apenas no **primeiro** push desta branch. Depois disso, `git push` sozinho já basta.
 
 **4. Abra o [Merge Request](#merge-request) no GitLab:**
+
+#### Revisão de arte é visual
+
+Diferente de código, a pessoa que revisa **não consegue ver a mudança só lendo o MR no GitLab**. Ela precisa:
+
+1. Fazer um `git fetch` para trazer a branch remota.
+2. Rodar `git switch art/nome-do-asset` para mudar para aquela branch.
+3. Abrir o projeto no Godot.
+4. Navegar até a cena onde os assets são usados.
+5. Olhar e conferir se ficou como esperado (cores certas, animação fluida, áudio sincronizado, etc.).
+6. Voltar para a description do MR no GitLab e clicar em **Approve**
 
 ### Algumas regras do grupo
 
@@ -672,5 +693,5 @@ A maioria das IDEs (VS Code, por exemplo) e o próprio GitLab (na tela do Merge 
 | `CONFLICT (content): ...`                         | Duas pessoas mexeram na mesma linha          | Siga a seção [Resolvendo conflitos de merge](#resolvendo-conflitos-de-merge) |
 | Conflito em um arquivo `.tscn`                    | Duas pessoas mexeram na mesma cena           | **Pare.** Chame a outra pessoa. Não resolva na mão                           |
 | `Permission denied (publickey)`                   | Sua chave SSH não está configurada no GitLab | Refaça a seção [Configurando o SSH](#configurando-o-ssh)                     |
-| Muitos arquivos "modificados" sem você ter mexido | Fim de linha (CRLF/LF) no Windows            | Veja [Windows e o fim de linha](#windows-e-o-fim-de-linha)                   |
+| Muitos arquivos "modificados" sem você ter mexido | Fim de linha (CRLF/LF) no Windows            | Veja Windows e o fim de linha                                                |
 | Imagens e sons vieram como texto estranho         | O Git LFS não está instalado                 | Instale o Git LFS e rode `git lfs pull`                                      |
