@@ -1,5 +1,12 @@
 # Como utilizar o Git e GitLab no seu projeto Godot
 
+<p align="center">
+  <img src="https://godotengine.org/assets/press/icon_color.svg" width="35" alt="Godot">
+  <img src="https://cdn.simpleicons.org/git" width="30" alt="Git">
+  <img src="https://www.readmecodegen.com/api/social-icon?name=gitlfs&size=30" alt="gitlfs" />
+  <img src="https://cdn.simpleicons.org/gitlab" width="30" alt="GitLab">
+</p>
+
 Essa ideia de guia veio primeiramente para auxiliar e padronizar o meu projeto de **TCC** em grupo da faculdade, de **Engenharia de Software**, mas nosso **TCC** se retratará de um jogo educativo.
 
 Este guia se baseará em conceitos de Git Flow, mas com adaptações para o nosso caso de uso, e nas documentações oficiais do Git, GitLab e Godot.
